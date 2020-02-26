@@ -60,6 +60,7 @@ for d in /home/linuxgsm/linuxgsm/lgsm/config-default/config-game-template/*/ ; d
 done
 
 echo "DONE GOMPLATING"
+#ls -al /home/linuxgsm/linuxgsm/serverfiles/garrysmod
 
 if [ -n "$LGSM_UPDATEINSTALLSKIP" ]; then
   case "$LGSM_UPDATEINSTALLSKIP" in
@@ -93,6 +94,12 @@ fi
 
 # # configure game-specfic settings
 # gomplate -f ${servercfgfullpath}.tmpl -o ${servercfgfullpath}   // I can't predict what the filename is. 
+
+# hardocded ttt configs
+if [ -d "/ttt_cfg" ]; then
+    echo "Additional ttt_configs found, copy them..."
+    cp /ttt_cfg/* /home/linuxgsm/linuxgsm/serverfiles/garrysmod/cfg/
+fi
 
 #
 ./lgsm-gameserver start

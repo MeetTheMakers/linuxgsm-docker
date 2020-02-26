@@ -1,9 +1,42 @@
 version: '3.1'
 services:
-  game:
-    image: joshhsoj1902/linuxgsm-docker:latest
+  ttt:
+#    image: joshhsoj1902/linuxgsm-docker:latest
+    build:
+      context: .
+#      dockerfile: Dockerfile_garry
+    restart: always
+    environment:
+      - LGSM_GAMESERVERNAME=gmodserver
+      - LGSM_UPDATEINSTALLSKIP=UPDATE
+#      - LGSM_DEFAULTMAP=ttt_rooftops_2016
+      - LGSM_DEFAULTMAP=ttt_minecraft_b5
+      - LGSM_GAMEMODE=terrortown
+      - LGSM_WSAPIKEY=F85D8826A99FE2BBA044F7B53D2F4328
+      - LGSM_WSCOLLECTIONID=538219066
+      - LGSM_MAXPLAYERS=16
+      - LGSM_IP=54.36.217.20
+      - LGSM_HOSTNAME=games.knox.moe
+    volumes:
+      - "/home/linuxgsm/linuxgsm/logs"
+#      - "/home/linuxgsm/linuxgsm/serverfiles/"
+      - "./ttt_cfg:/ttt_cfg"
+#      - "./ttt_cfg:/home/linuxgsm/linuxgsm/serverfiles/garrysmod/cfg"
+      - "css-files:/css"
+    ports:
+      - "54.36.217.20:27015:27015/tcp"
+      - "54.36.217.20:27015:27015/udp"
+  css:
+    build:
+      context: .
+      dockerfile: Dockerfile_css
     environment:
       - LGSM_GAMESERVERNAME=cssserver
       - LGSM_UPDATEINSTALLSKIP=UPDATE
     volumes:
       - "/home/linuxgsm/linuxgsm/logs"
+      - "css-files:/home/linuxgsm/linuxgsm/serverfiles/cstrike"
+
+volumes:
+  css-files:
+    driver: local
